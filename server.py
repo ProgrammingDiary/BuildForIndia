@@ -1,7 +1,7 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, flash, redirect, url_for
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, College, Menu, User
+from database_setup import Base, College, Menu, User, Merchant
 
 app = Flask(__name__)
 
@@ -20,7 +20,7 @@ def home():
 def registerUser():
 	if request.method == 'POST':
 		college_id = session.query(College).filter_by(name=request.form['collegeNames']).one().id
-		newUser = User(name=request.form['fullname'], mobile=request.form['mobileno'], email=request.form['email'], college_id=college_id)
+		newUser = User(name=request.form['fullname'], mobile=request.form['mobileno'], email=request.form['email'], college_id=college_id,password=request.form['password'])
 		session.add(newUser)
 		session.commit()
 		if session.query(User).filter_by(email=request.form['email']).count() != 0:
@@ -28,10 +28,62 @@ def registerUser():
 			return redirect(url_for('registerUser'))
 		else:
 			flash("Registration Successfull")
-			return redirect(url_for('home'))
+			return redirect('/')
 	else:
 		return render_template('registerUser.html')
 
+@app.route('/registermerchant', methods=['GET', 'POST'])
+def registerMerchant():
+	if request.method == 'POST':
+		newUser = Merchant(name=request.form['fullname'], mobile=request.form['mobileno'], email=request.form['email'],address=request.form['address'],company=request.form['company'],password=request.form['password'])
+		session.add(newUser)
+		session.commit()
+		if session.query(Merchant).filter_by(email=request.form['email']).count() != 0:
+			flash("Merchant already registered.")
+			return redirect(url_for('registerMerchant'))
+		else:
+			flash("Registration Successfull")
+			return redirect('/')
+	else:
+		return render_template('merchantRegister.html')
+
+@app.route('/userlogin', methods=['GET', 'POST'])
+def loginUser():
+	if request.method == 'POST':
+		userQuery = session.query(User).filter_by(email=request.form['email'])
+		currUser = userQuery.one()
+		if userQuery.count() == 0:
+			flash("Invalid Account")
+			return redirect('/userlogin')
+		else:
+			if currUser.password == request.form['password']:
+				flash("Registration Successfull")
+				return redirect('/')
+			else:
+				flash("Invalid Credentials")
+				return redirect('/userlogin')
+	else:
+		return render_template('loginUser.html')
+
+@app.route('/merchantlogin', methods=['GET', 'POST'])
+def loginMercahnt():
+	if request.method == 'POST':
+		userQuery = session.query(Merchant).filter_by(email=request.form['email'])
+		currUser = userQuery.one()
+		if userQuery.count() == 0:
+			flash("Invalid Account")
+			return redirect('/merchantlogin')
+		else:
+			if currUser.password == request.form['password']:
+				flash("Registration Successfull")
+				return redirect('/')
+			else:
+				flash("Invalid Credentials")
+				return redirect('/merchantlogin')
+	else:
+		return render_template('loginMerchant.html')
+
 if __name__ == '__main__':
 	app.debug = True
+	app.secret_key = 'some_secret'
 	app.run(host='0.0.0.0', port=8080)

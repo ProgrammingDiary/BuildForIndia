@@ -6,7 +6,7 @@ $(document).ready(function() {
 
 function getAjax() {
 	$.ajax({
-		url: "../../college.json",
+		url: "https://api.myjson.com/bins/467yw",
 		dataType: 'json',
 		type: 'GET',
 		success: function(data) {
