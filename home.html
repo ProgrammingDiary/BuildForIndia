@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<!-- Compiled and minified CSS -->
   	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
-	<link rel="stylesheet" type="text/css" href="static/home.css">
+	<link rel="stylesheet" type="text/css" href="static/css/home.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 <body>
@@ -33,17 +33,20 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col m8 l8 s8 offset-m2 offset-l2 offset-s2" id="MainDescription">
+		<div class="col m10 l10 s10 offset-m1 offset-l1 offset-s1" id="mainDescription">
 			<p>
 				Hey there! Thanks for stumbling upon. We are a group of people that provide various Campus Solutions to all types of colleges. Currently we extend our services to enable the Canteen aggregators to get their platform online and enable door to door delivery in the campus itself.
 			</p>
 
 			<p>
 				Here are a few things which will help you to better understand us:
-				<ul>
+				<ul class="browser-default">
 					<li>All our payments are processed via secure modes.</li>
+					<br>
 					<li>Each of our partner is given their specic page to showcase their dishes.</li>
+					<br>
 					<li>We have taken steps to ensure that the orders are legit</li>
+					<br>
 					<li>A very simple order placing experience is provided to your customer.</li>
 				</ul>
 			</p>
@@ -54,13 +57,14 @@
 </div>
 </main>
 <footer>
-	<div class="row">
-		<div class="col s12 m6 l6">
+	<div class="row brown lighten-2">
+		<div class="col s12 m6 l6 center-align" id="contact">
 			Contact us:
 		</div>
-		<div class="col s12 m6 l6">
-			<i class="small material-icons">phone</i> +918860845898
-			<i class="small material-icons">email</i> something@something.com
+		<div class="col s12 m6 l6 left-align">
+			<i class="small material-icons vertical-align">phone</i><span id="contactDetails"> +918860845898</span>
+			<br>
+			<i class="small material-icons vertical-align">email</i><span id="contactDetails"> something@something.com</span>
 		</div>	
 	</div>	
 </footer>
