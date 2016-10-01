@@ -28,6 +28,15 @@ class User(Base):
 	college_id = Column(Integer, ForeignKey('college.id'))
 	college = relationship(College)
 
+class Merchant(Base):
+	__tablename__ = "merchant"
+	id = Column(Integer, primary_key=True)
+	name = Column(String(80),nullable=False)
+	mobile = Column(Integer,nullable=False)
+	email = Column(String(80),nullable=False)
+	address = Column(String(150),nullable=False)
+	company = Column(String(80),nullable=False)
+	password = Column(String(120),nullable=False)
 		
 
 engine =create_engine('sqlite:///database.db')
