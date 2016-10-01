@@ -16,16 +16,21 @@ session = DBSession()
 def home():
 	return render_template('home.html')
 
-#@app.route('/registeruser', methods=['GET', 'POST'])
-#def userLogin():
-#	if request.method == 'POST':
-#		college_id = session.query(College).filter_by(name=request.form['collegeNames']).one().id
-#		newUser = User(name=request.form['fullname'], mobile=request.form['mobileno'], email=request.form['email'], college_id)
-#		session.add(newUser)
-#		session.commit()
-#		return redirect()
-#	else:
-#		return render_template('registerUser.html')
+@app.route('/registeruser', methods=['GET', 'POST'])
+def registerUser():
+	if request.method == 'POST':
+		college_id = session.query(College).filter_by(name=request.form['collegeNames']).one().id
+		newUser = User(name=request.form['fullname'], mobile=request.form['mobileno'], email=request.form['email'], college_id=college_id)
+		session.add(newUser)
+		session.commit()
+		if session.query(User).filter_by(email=request.form['email']).count() != 0:
+			flash("User already registered.")
+			return redirect(url_for('registerUser'))
+		else:
+			flash("Registration Successfull")
+			return redirect(url_for('home'))
+	else:
+		return render_template('registerUser.html')
 
 if __name__ == '__main__':
 	app.debug = True
