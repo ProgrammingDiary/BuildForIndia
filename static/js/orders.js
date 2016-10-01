@@ -46,9 +46,10 @@ function getAjax() {
 			if(price == 0 || Name === 0){
 				continue
 			}
-			else
-			$("#orderModal").append(price + Name + "<br>");
+			else{
+			$("#modalRow").append("<div class='col m6 s6 l6'>" + price + "</div><div class='col m6 l6 s6'>" + Name + "</div><br>");
 
+			}
 		}	
 
 	}
