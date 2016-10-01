@@ -24,6 +24,7 @@ class User(Base):
 	name = Column(String(80),nullable=False)
 	mobile = Column(Integer,nullable=False)
 	email = Column(String(80),nullable=False)
+	password = Column(String(120),nullable=False)
 	college_id = Column(Integer, ForeignKey('college.id'))
 	college = relationship(College)
 
