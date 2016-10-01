@@ -43,7 +43,11 @@ function getAjax() {
 			}
 
 			}
-			$("#orderModal").append(idArray[i-1] + price + Name);
+			if(price == 0 || Name === 0){
+				continue
+			}
+			else
+			$("#orderModal").append(price + Name + "<br>");
 
 		}	
 
