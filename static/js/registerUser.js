@@ -12,9 +12,18 @@ function getAjax() {
 		success: function(data) {
 			console.log("Got the request");
 			console.log(data[0]["name"]);
-			$('#collegeNames').html("<option>" + data[0]["name"] + "</option><option>" + data[1]["name"] + "</option>");
-			//$('#collegeNames').selectpicker('refresh');	
+			$('#collegeNames').html(populateSelect(data));	
 		},
 		async: false
 	})
+}
+
+function populateSelect(data) {
+	name = ""
+	for(i=0;i<6;i++) {
+		name += "<option>" + data[i]["name"] + "</option>";
+		console.log(name)
+	}
+
+	return name
 }
