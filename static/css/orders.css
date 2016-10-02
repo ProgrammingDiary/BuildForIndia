@@ -1,0 +1,10 @@
+body {
+	background-color: #ccc
+}
+#modalRow col {
+	padding-top: 1em;
+}
+
+.col {
+	padding-top: 5em !important;
+}

@@ -32,6 +32,7 @@ function getAjax() {
 				price += data[j-1]["Quantity"] * data[j-1]["Price"];
 				Name.push(data[j-1]["Dish Name"]);
 				idArray.push(data[j-1]["OrderID"]);
+				console.log(idArray)
 				console.log(price);
 				j++;
 			}
@@ -47,7 +48,10 @@ function getAjax() {
 				continue
 			}
 			else{
-			$("#modalRow").append("<div class='col m6 s6 l6'>" + price + "</div><div class='col m6 l6 s6'>" + Name + "</div><br>");
+				uniqueArray = idArray.filter(function(item, pos) {
+    			return idArray.indexOf(item) == pos;
+			})
+			$("#modalRow").append("<div class='col m6 s6 l6'>"+ price + "</div><div class='col m6 l6 s6'>" + Name + "</div><br>");
 
 			}
 		}	
