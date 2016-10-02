@@ -10,11 +10,14 @@
 	<link rel="stylesheet" type="text/css" href="../static/css/loginMerchant.css">
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
+<body class="brown darken-4">
 <div class="container">
 	<div class="row">
 		<form class="col s12 m12 l12" id="loginForm" method="POST" action="/merchantlogin">
 			<div class="row">
+				<div class="row center-align">
+					<h1 class="white-text">Merchant Login</h1>
+				</div>
 				<div class="col s12 m12 l12 input-field">
 					<i class="material-icons prefix">email</i>
 					<input placeholder="Full Name" id="email" name="email" type="text" class="validate">
@@ -27,7 +30,7 @@
 				</div>
 			</div>
 		</form>
-		<button class="btn waves-effect waves-light" form="loginForm" type="submit" method="POST">Submit
+		<button class="btn waves-effect waves-light brown darken-1" form="loginForm" type="submit" method="POST">Submit
     		<i class="material-icons right">send</i>
   		</button> 
 	</div>
