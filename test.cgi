@@ -1,4 +1,4 @@
-#!env/bin/python
+#!/usr/bin/python
 
 import Checksum
 import requests
@@ -16,7 +16,7 @@ data_dict = {
             'INDUSTRY_TYPE_ID':'Retail',
             'WEBSITE':'worldpressplg',
             'CHANNEL_ID':'WEB',
-            'CALLBACK_URL':'http://localhost/response.cgi',
+	    #'CALLBACK_URL':'http://localhost/pythonKit/response.cgi',
         }
 
 
