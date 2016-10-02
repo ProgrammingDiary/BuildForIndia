@@ -1,12 +1,17 @@
-from flask import Flask, render_template, request, flash, redirect, url_for
+from flask import Flask, render_template, request, flash, redirect, url_for,jsonify
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, College, Menu, User, Merchant,Order,Order_Details
+import Checksum
+import base64
+import requests
+import simplejson
+
 
 
 app = Flask(__name__)
 
-engine = create_engine('sqlite:///database.db')
+engine = create_engine('sqlite:///test.db')
 Base.metadata.bind = engine
 DBSession = sessionmaker(bind = engine)
 
@@ -88,7 +93,7 @@ def loginMerchant():
 def Menu(userid):
 	if request.method == 'POST':
 		Amount = (request.form['Shahi Paneer']*180) + (request.form['Burger']*30) + (request.form['Pav Bhaji']*50)
-		newOrder = Order(userID=userid, Amount=Amount)
+		newOrder = Order(userID=userid, Amount=Amount,Address=request.form['Address'])
 		session.add(newOrder)
 		session.commit()
 		#dishID = session.query(Menu).filter_by(name='Shahi Paneer').one().id
@@ -109,11 +114,41 @@ def Menu(userid):
 			return redirect('/merchantlogin')
 		else:
 			flash("Registration Successfull")
-			return redirect('/')
+			return makeTransaction()
 			
 	else:
 		return render_template('Menu.html')
 
+MERCHANT_KEY = 'kbzk1DSbJiV_O3p5';
+data_dict = {
+			'REQUEST_TYPE' : 'DEFAULT',
+            'MID':'WorldP64425807474247',
+            'ORDER_ID':'dpsgfgfaedd',
+            'TXN_AMOUNT': 1,
+            'CUST_ID':'acfff@paytm.com',
+            'INDUSTRY_TYPE_ID':'Retail',
+            'WEBSITE':'worldpressplg',
+            'CHANNEL_ID':'WEB',
+            'MOBILE_NO' : 7777777777
+	    #'CALLBACK_URL':'http://localhost/pythonKit/response.cgi',
+        }
+
+def makeTransaction():
+	param_dict = data_dict  
+	param_dict['CHECKSUMHASH'] = Checksum.generate_checksum(data_dict, MERCHANT_KEY)
+	print data_dict
+	dict_string = Checksum.__get_param_string__(data_dict)
+	#encoded = base64.b64encode(dict_string)
+	#print encoded
+	url = "https://pguat.paytm.com/oltp-web/processTransaction"
+	response = requests.post(url, data=data_dict)
+	print response
+	return "Hello World!"
+	#return simplejson.loads({"status":})
+
+
+
+#print param_dict
 #@app.route('/response.cgi')
 #def Response():
 #	return response
