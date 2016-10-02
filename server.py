@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, flash, redirect, url_for
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, College, Menu, User, Merchant
+from database_setup import Base, College, Menu, User, Merchant,Order,Order_Details
 
 
 app = Flask(__name__)
@@ -87,20 +87,22 @@ def loginMerchant():
 @app.route('/dashboard/<userid>', methods=['GET', 'POST'])
 def Menu(userid):
 	if request.method == 'POST':
-		print request.args.get('Shahi Paneer',0,type=int)
-
-		Amount = (request.form['Shahi Paneer']*180) + (request.form['Burger']*30) + (request.form['Pav Bhaji']*50000)
+		Amount = (request.form['Shahi Paneer']*180) + (request.form['Burger']*30) + (request.form['Pav Bhaji']*50)
 		newOrder = Order(userID=userid, Amount=Amount)
-		session.add(Order(newOrder))
+		session.add(newOrder)
 		session.commit()
-		order_1 = Order_Details(orderID=newOrder.id,quantity=request.form['Shahi Paneer'],dishID=session.query(Menu).filter_by(name='Shahi Paneer').one().id)
-		order_2 = Order_Details(orderID=newOrder.id,quantity=request.form['Burger'],dishID=session.query(Menu).filter_by(name='Burger').one().id)
-		order_3 = Order_Details(orderID=newOrder.id,quantity=request.form['Pav Bhaji'],dishID=session.query(Menu).filter_by(name='Pav Bhaji').one().id)
-		session.add(Order_Details(order_1))
+		#dishID = session.query(Menu).filter_by(name='Shahi Paneer').one().id
+		order_1 = Order_Details(orderID=newOrder.id,quantity=request.form['Shahi Paneer'],dishID=1)
+		#dishID = session.query(Menu).filter_by(name='Burger').one().id
+		#print dishID
+		order_2 = Order_Details(orderID=newOrder.id,quantity=request.form['Burger'],dishID=2)
+		#dishID = session.query(Menu).filter_by(name='Pav Bhaji').one().id
+		order_3 = Order_Details(orderID=newOrder.id,quantity=request.form['Pav Bhaji'],dishID=3)
+		session.add(order_1)
 		session.commit()
-		session.add(Order_Details(order_2))
+		session.add(order_2)
 		session.commit()
-		session.add(Order_Details(order_3))
+		session.add(order_3)
 		session.commit()
 		if Amount == 0:
 			flash("Please Enter valid quantities")
