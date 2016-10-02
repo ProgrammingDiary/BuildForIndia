@@ -25,7 +25,7 @@ function showMenu(data) {
 	string = "<form method=\'POST\' id=\'menu\'>"	
 	for(i = 0; i < images; i++) {
 		
-		string += "<div class=\"col s12 m4 l4 center-align\"><div class=\"card\"><div class=\"card-image\"><img class=\"responsive-img\" id=\"menuTag\" src=\"../static/images/" + imageArray[i] + ".jpg\"><span class=\"card-title\">" + imageArray[i] + "</span></div><div class=\"card-action\"><p>Rs. " + priceArray[i] +"</p><input type=\"text\" id=\"" + imageArray[i] +"\"></div></div></div>";
+		string += "<div class=\"col s12 m4 l4 center-align\"><div class=\"card\"><div class=\"card-image\"><img class=\"responsive-img\" id=\"menuTag\" src=\"../static/images/" + imageArray[i] + ".jpg\"><span class=\"card-title\">" + imageArray[i] + "</span></div><div class=\"card-action\"><p>Rs. " + priceArray[i] +"</p><input class=\"validate\" type=\"text\" name=\"" + imageArray[i] + "\" id=\"" + imageArray[i] +"\"></div></div></div>";
 		console.log(string);
 	}
 	string +="</form><button type=\'submit\' form=\'menu\' method=\'POST\' class=\"btn waves-effect waves-light\">Submit</button>";
