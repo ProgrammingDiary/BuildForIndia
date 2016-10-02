@@ -3,6 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, College, Menu, User, Merchant
 
+
 app = Flask(__name__)
 
 engine = create_engine('sqlite:///database.db')
@@ -86,7 +87,7 @@ def loginMerchant():
 @app.route('/dashboard/<userid>', methods=['GET', 'POST'])
 def Menu(userid):
 	if request.method == 'POST':
-		print request.form['Shahi Paneer']
+		print request.args.get('Shahi Paneer',0,type=int)
 
 		Amount = (request.form['Shahi Paneer']*180) + (request.form['Burger']*30) + (request.form['Pav Bhaji']*50000)
 		newOrder = Order(userID=userid, Amount=Amount)
@@ -110,6 +111,10 @@ def Menu(userid):
 			
 	else:
 		return render_template('Menu.html')
+
+#@app.route('/response.cgi')
+#def Response():
+#	return response
 
 if __name__ == '__main__':
 	app.debug = True
