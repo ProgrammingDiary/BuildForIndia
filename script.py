@@ -1,6 +1,6 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from database_setup import Base, College, Menu, User
+from database_setup import Base, College, Menu, User, Order, Order_Details
 
 engine = create_engine('sqlite:///database.db')
 Base.metadata.bind = engine
@@ -8,15 +8,11 @@ DBSession = sessionmaker(bind = engine)
 
 session = DBSession()
 
-session.add(College(name = "IIT Delhi", state = "Delhi"))
-session.commit()
-session.add(College(name = "IIT Bombay", state = "Maharashtra"))
-session.commit()
-session.add(College(name = "IIT Guwahati", state = "Assam"))
-session.commit()
-session.add(College(name = "IIT Roorkee", state = "Uttarakhand"))
-session.commit()
-session.add(College(name = "IIT Kharagpur", state = "West Bengal"))
-session.commit()
-session.add(College(name = "IIT Dhanbad", state = "Jharkhand"))
-session.commit()
+order1 = session.query(Order_Details).group_by(Order_Details.orderID)
+for o in order1:
+	print o.id
+	print o.orderID
+	print o.dish.name
+	print o.dish.price
+	print o.quantity
+	print

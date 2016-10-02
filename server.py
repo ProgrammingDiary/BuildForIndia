@@ -55,10 +55,10 @@ def loginUser():
 		if userQuery.count() == 0:
 			flash("Invalid Account")
 			return redirect('/userlogin')
-		else:
+		else:	
 			if currUser.password == request.form['password']:
 				flash("Registration Successfull")
-				return redirect('/')
+				return redirect(url_for('Menu', userid=currUser.id), code=200)
 			else:
 				flash("Invalid Credentials")
 				return redirect('/userlogin')
@@ -66,7 +66,7 @@ def loginUser():
 		return render_template('loginUser.html')
 
 @app.route('/merchantlogin', methods=['GET', 'POST'])
-def loginMercahnt():
+def loginMerchant():
 	if request.method == 'POST':
 		userQuery = session.query(Merchant).filter_by(email=request.form['email'])
 		currUser = userQuery.one()
@@ -82,6 +82,34 @@ def loginMercahnt():
 				return redirect('/merchantlogin')
 	else:
 		return render_template('loginMerchant.html')
+
+@app.route('/dashboard/<userid>', methods=['GET', 'POST'])
+def Menu(userid):
+	if request.method == 'POST':
+		print request.form['Shahi Paneer']
+
+		Amount = (request.form['Shahi Paneer']*180) + (request.form['Burger']*30) + (request.form['Pav Bhaji']*50000)
+		newOrder = Order(userID=userid, Amount=Amount)
+		session.add(Order(newOrder))
+		session.commit()
+		order_1 = Order_Details(orderID=newOrder.id,quantity=request.form['Shahi Paneer'],dishID=session.query(Menu).filter_by(name='Shahi Paneer').one().id)
+		order_2 = Order_Details(orderID=newOrder.id,quantity=request.form['Burger'],dishID=session.query(Menu).filter_by(name='Burger').one().id)
+		order_3 = Order_Details(orderID=newOrder.id,quantity=request.form['Pav Bhaji'],dishID=session.query(Menu).filter_by(name='Pav Bhaji').one().id)
+		session.add(Order_Details(order_1))
+		session.commit()
+		session.add(Order_Details(order_2))
+		session.commit()
+		session.add(Order_Details(order_3))
+		session.commit()
+		if Amount == 0:
+			flash("Please Enter valid quantities")
+			return redirect('/merchantlogin')
+		else:
+			flash("Registration Successfull")
+			return redirect('/')
+			
+	else:
+		return render_template('Menu.html')
 
 if __name__ == '__main__':
 	app.debug = True

@@ -37,7 +37,22 @@ class Merchant(Base):
 	address = Column(String(150),nullable=False)
 	company = Column(String(80),nullable=False)
 	password = Column(String(120),nullable=False)
-		
+
+class Order(Base):
+	__tablename__ = 'orders'
+	id = Column(Integer,primary_key=True)
+	userID = Column(Integer, ForeignKey('user.id'))
+	Amount = Column(Float, nullable=False)
+	
+
+class Order_Details(Base):
+	__tablename__ = "order_details"
+	id = Column(Integer,primary_key=True)
+	orderID = Column(Integer, ForeignKey('orders.id'))
+	dishID = Column(Integer, ForeignKey('menu.id'))
+	dish = relationship(Menu)
+	quantity = Column(Integer, nullable=False)
+
 
 engine =create_engine('sqlite:///database.db')
 
