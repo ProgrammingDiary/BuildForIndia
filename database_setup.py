@@ -43,6 +43,7 @@ class Order(Base):
 	id = Column(Integer,primary_key=True)
 	userID = Column(Integer, ForeignKey('user.id'))
 	Amount = Column(Float, nullable=False)
+	Address = Column(String(120), nullable=False)
 	
 
 class Order_Details(Base):
@@ -54,6 +55,6 @@ class Order_Details(Base):
 	quantity = Column(Integer, nullable=False)
 
 
-engine =create_engine('sqlite:///database.db')
+engine =create_engine('sqlite:///test.db')
 
 Base.metadata.create_all(engine)

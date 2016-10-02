@@ -88,7 +88,7 @@ def loginMerchant():
 def Menu(userid):
 	if request.method == 'POST':
 		Amount = (request.form['Shahi Paneer']*180) + (request.form['Burger']*30) + (request.form['Pav Bhaji']*50)
-		newOrder = Order(userID=userid, Amount=Amount)
+		newOrder = Order(userID=userid, Amount=Amount,Address=request.form['Address'])
 		session.add(newOrder)
 		session.commit()
 		#dishID = session.query(Menu).filter_by(name='Shahi Paneer').one().id
